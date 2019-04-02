@@ -1,0 +1,49 @@
+mvi h, 01100000b
+mvi l, 00010010b
+loop: call delay
+adi 1
+daa
+cmp  h
+cz dakika
+mov e, a
+jmp loop
+
+dakika: mvi e, 0
+inr d
+mov a, d
+daa
+cmp h
+cz saat
+mov d, a
+mvi a, 0
+ret
+
+saat: mvi d, 0
+inr c
+mov a, c
+daa
+mov c, a
+cmp l
+cz sifirla
+mvi a, 0
+ret
+
+sifirla: lxi b, 0000h
+mvi a, 0
+hlt
+
+delay: mvi a, 0ffh
+loop2: mvi b, 0ffh
+loop1: dcr b
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+nop
+jnz loop1
+dcr a
+jnz loop2
+ret
